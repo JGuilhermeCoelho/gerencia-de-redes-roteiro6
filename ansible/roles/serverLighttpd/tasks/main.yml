@@ -1,0 +1,32 @@
+---
+# tasks file for ServerLighttpd
+- name: "ATUALIZAR PACOTES"
+  apt:
+    update_cache: yes
+
+- name: "INSTALAÇÃO DO PACOTE LIGHTTPD"
+  apt:
+    name: lighttpd
+    state: present
+
+- name: "INICIALIZAÇÃO DO SERVIÇO LIGHTTPD"
+  systemd:
+    name: lighttpd
+    state: started
+    enabled: yes
+
+- name: "CRIAÇÃO DO DIRETÓRIO /MEU_DIRETORIO_WEB"
+  file:
+    path: /meu_diretorio_web
+    state: directory
+
+- name: "COPIAR ARQUIVO INDEX.HTML"
+  copy:
+    src: /home/gerencia/ansible/roles/serverLighttpd/files/index.html
+    dest: /meu_diretorio_web/index.html
+
+- name: "COPIAR ARQUIVO DE CONFIGURAÇÃO DO LIGHTTPD"
+  template:
+    src: templates/lighttpd.conf
+    dest: /etc/lighttpd/lighttpd.conf
+  notify: RestartLighttpd

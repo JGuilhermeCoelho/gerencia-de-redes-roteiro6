@@ -1,0 +1,6 @@
+---
+# vars file for ServerLighttpd
+
+lighttpd_document_root: /meu_diretorio_web
+lighttpd_port: 8080
+
